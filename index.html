@@ -1,0 +1,23 @@
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <link rel="stylesheet" type="text/css" href="vendor-frontend/angular-bootstrap/ui-bootstrap-csp.css">
+    <link rel="stylesheet" type="text/css" href="vendor-frontend/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+</head>
+<header>
+    <title>Angular Test!</title>
+    <!-- Pasar scripts to footer -->
+    <script src="vendor-frontend/angularjs-1.7.2/angular.min.js"></script>
+    <script src="vendor-frontend/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="vendor-frontend/ui-router-1.0.7/angular-ui-router.min.js"></script>
+
+    <script src="productPageBackend.js"></script>
+</header>
+<body>
+<div ng-app="testModule">
+    <div ng-controller="testController">
+        <div ng-include="'indexService.html'"></div>
+    </div>
+</div>
+</body>
+</html>

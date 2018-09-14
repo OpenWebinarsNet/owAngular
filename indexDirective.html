@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <meta charset="ISO-8859-1">
+        <link rel="stylesheet" type="text/css" href="vendor-frontend/angular-bootstrap/ui-bootstrap-csp.css">
+        <link rel="stylesheet" type="text/css" href="vendor-frontend/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    </head>
+    <header>
+        <title>Angular Test!</title>
+        <!-- Pasar scripts to footer -->
+        <script src="vendor-frontend/angularjs-1.7.2/angular.min.js"></script>
+        <script src="vendor-frontend/angular-bootstrap/ui-bootstrap.min.js"></script>
+        <script src="productPageBackend.js"></script>
+    </header>
+    <body>
+        <div ng-app="testModule">
+            <div ng-controller="testController">
+                <button ng-click="clickMe($event)">Event</button>
+                <input type="text" ng-model="path"/>
+                <div class="row">
+                    <div class="col-sm-2">Hola</div>
+                    <div class="col-sm-2">Qué</div>
+                    <div class="col-sm-2">Tal</div>
+                </div>
+                <my-directive-with-text></my-directive-with-text>
+                <div my-directive-with-text></div>
+                <div my-directive-with-template-url></div>
+                <div my-directive-with-attributes prueba="Template"></div>
+                <div class="my-directive-with-class-name"></div>
+            </div>
+        </div>
+    </body>
+</html>
