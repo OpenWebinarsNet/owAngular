@@ -47,8 +47,8 @@
 		$scope.messageTest = 'donee';
 	}
 
-	app.controller('testController', ['$scope', 'factoryName', 'serviceName', '$http', '$q', productEditorController]);
-	function productEditorController($scope, nameFactory, nameService, $http, $q) {
+	app.controller('testController', ['$scope', 'factoryName', 'serviceName', '$http', '$q', testController]);
+	function testController($scope, nameFactory, nameService, $http, $q) {
 		$scope.path = 'texto de prueba';
 
 		var objectTest = {
