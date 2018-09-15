@@ -49,7 +49,15 @@
 
 	app.controller('testController', ['$scope', 'factoryName', 'serviceName', '$http', '$q', testController]);
 	function testController($scope, nameFactory, nameService, $http, $q) {
-		$scope.path = 'texto de prueba';
+
+        $scope.userData = {};
+        $scope.userData.path = 'texto de prueba';
+		$scope.test = function() {
+			$scope.userData.path = 'texto cambiado';
+		}
+
+		$scope.userData.name = 'nombre';
+
 
 		var objectTest = {
 			message : "Not finish already"
@@ -207,7 +215,28 @@
 		this.alertFunction = function(param) {
 			alert(param);
 		};
+		this.testParam = 12;
 	});
+
+    // COMPONENT
+    function myComponentController($scope, $element, $attrs, serviceName) {
+        $scope.data = [
+        	{
+            	name: 'Nacho',
+            	value: serviceName.testParam
+        	}
+		];
+        $scope.info = {};
+        $scope.info.name = 'Test';
+    }
+
+    app.component('myComponent', {
+        controller: ['$scope', '$element', '$attrs', 'serviceName', myComponentController],
+        templateUrl: 'myComponentTemplate.html'
+    });
+
+    sessionStorage.setItem('testSessionStorage', 'hola');
+    localStorage.setItem('testLocalStorage', 'hola local storage');
 
 
 })(window.angular);
