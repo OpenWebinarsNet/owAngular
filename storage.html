@@ -1,0 +1,15 @@
+<button ng-click="setSessionStorage()">Guardar en session storage</button>
+<button ng-click="setLocalStorage()">Guardar en local storage</button>
+
+<button ng-click="getSessionStorage()">Obtener de session storage</button>
+<button ng-click="getLocalStorage()">Obtener de local storage</button>
+
+<div ng-if="data.valueSessionStorage">
+    <span>Session storage</span>
+    {{data.valueSessionStorage}}
+</div>
+
+<div ng-if="data.valueLocalStorage">
+    <span>Local storage</span>
+    {{data.localStorage}}
+</div>

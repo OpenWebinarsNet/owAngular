@@ -1,0 +1,27 @@
+<div ng-if="data.number != 0">Hola</div>
+<div ng-switch="data.number">
+    <span ng-switch-when="0">Zeeero</span>
+    <span ng-switch-when="1">One</span>
+</div>
+<br>
+<button ng-click="changeNgIf()">CLick me!</button>
+<br>
+<span>{{data.number === 0 ? 'Es cero' : 'DIstinto a cero'}}</span>
+
+
+{{data.dataArray}}
+<div>
+    <span ng-repeat="p in data.dataArray track by $index">
+        {{p}}
+    </span>
+</div>
+<select ng-options="option as option.label for option in data.options track by option.id"
+ng-model="data.selected"></select>
+
+
+<input type="checkbox" ng-model="confirmed" ng-change="change()"/>
+<br>
+<button ng-click="alert()"></button>
+<br>
+<div ng-hide="data.counter > 2">Contador mayor que 2</div>
+{{data.counter}}

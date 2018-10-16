@@ -2,10 +2,9 @@
 	'use strict';
 
 
-	//var app = angular.module('testModule', ['ui.bootstrap']);
 	var app = angular.module('testModule', ['ui.router']);
 
-	/** config **/
+	/** ROUTING **/
 	app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
 		// ---------------------------------------------------------------------
@@ -13,42 +12,60 @@
 
 		$urlRouterProvider.otherwise('/');
 
-		/*$stateProvider.state('base', {
-			abstract: true,
+		$stateProvider.state('base', {
+			url: '/',
 			views: {
 				main: {
-					templateUrl: 'testTemplateRouteFake.html',
+					templateUrl: 'testTemplateRouteHome.html',
 					controller: ['$scope', testRouteController]
 				}
 			}
-		});*/
+		});
 
 		$stateProvider.state('details', {
 			url: '/details',
 			views: {
 				main: {
-					templateUrl: 'testTemplateRoute.html',
+					templateUrl: 'testTemplateRouteDetails.html',
 					controller: ['$scope', testRouteController]
 				}
 			}
 		});
+
+        $stateProvider.state('rutaNueva', {
+            url: '/ruta',
+            views: {
+                main: {
+                    templateUrl: 'testTemplateRouteNueva.html',
+                    controller: ['$scope', testRouteController]
+                }
+            }
+        });
 	}]);
+
+    function testRouteController($scope) {
+        $scope.messageTest = 'Mensaje de scope';
+    }
 
 	/** FILTER **/
 	app.filter('reverse', function(){
-		return function(input, parameter) {
-			console.log(parameter);
-			return (typeof input !== 'undefined') ? input+"hola" : "";
+		return function(input) {
+			return (typeof input !== 'undefined') ? input+"---" : "";
 		};
 	});
 
-	//app.controller('testControllerForRouting', ['$scope', testRouteController]);
-	function testRouteController($scope) {
-		$scope.messageTest = 'donee';
-	}
-
 	app.controller('testController', ['$scope', 'factoryName', 'serviceName', '$http', '$q', testController]);
 	function testController($scope, nameFactory, nameService, $http, $q) {
+
+        /** FACTORY **/
+        $scope.testFactoryInController = function(param) {
+            nameFactory(param);
+        };
+
+        /** SERVICE **/
+        $scope.testServiceInController = function(param) {
+            nameService.alertFunction(param);
+        };
 
         $scope.userData = {};
         $scope.userData.path = 'texto de prueba';
@@ -57,12 +74,6 @@
 		}
 
 		$scope.userData.name = 'nombre';
-
-
-		var objectTest = {
-			message : "Not finish already"
-		};
-		$scope.objectTest = objectTest;
 
 		/*** EXPRESSIONS ****/
 
@@ -90,31 +101,31 @@
 		AngularJS comes with a collection of built-in filters, but it is easy to define your own as well.
 		 */
 
-		/** FACTORY **/
-		$scope.testFactoryInController = function(param) {
-			nameFactory(param);
-		};
-
-		/** SERVICE **/
-		$scope.testServiceInController = function(param) {
-			nameService.alertFunction(param);
-		};
-
 		/** http service **/
-		$scope.url = 'http://localhost:8080/curso-symfony/curso/web/app_dev.php/ong/create';
+        var objectTest = {
+            message : "No ha hecho la llamada todavia"
+        };
+        $scope.objectTest = objectTest;
+
+
 		$scope.httpFunction = function() {
 
+            var url = 'http://localhost/curso-symfony/curso/web/app_dev.php/cursos/course';
 			var defer = $q.defer();
 			var promise = defer.promise;
 
 			$http(
 				{
 					method: 'POST',
-					url: $scope.url
+					url: url,
+					data: {
+						name: 'nombre 1',
+						description: 'descripcion'
+					}
 				}
 			).then(
 				function(response) {
-					console.log('done');
+					console.log('hecho!');
 					defer.resolve(response);
 				},
 				function(response) {
@@ -128,24 +139,122 @@
 			return promise;
 		};
 
-		$scope.httpCallDone = function() {
+        $scope.putHttpFunction = function() {
+
+            var url = 'http://localhost/curso-symfony/curso/web/app_dev.php/cursos/course/7';
+            var defer = $q.defer();
+            var promise = defer.promise;
+
+            $http(
+                {
+                    method: 'PUT',
+                    url: url,
+                    data: {
+                        name: 'nombre 1 modificado',
+                        description: 'descripcion modificada'
+                    }
+                }
+            ).then(
+                function(response) {
+                    console.log('hecho!');
+                    defer.resolve(response);
+                },
+                function(response) {
+                    /*$scope.data = response.data || 'Request failed';
+                    $scope.status = response.status;*/
+                    console.log('Error');
+                    defer.reject('Error code 2');
+                }
+            );
+
+            return promise;
+        };
+
+        $scope.deleteHttpFunction = function() {
+
+            var url = 'http://localhost/curso-symfony/curso/web/app_dev.php/cursos/course/7';
+            var defer = $q.defer();
+            var promise = defer.promise;
+
+            $http(
+                {
+                    method: 'DELETE',
+                    url: url
+                }
+            ).then(
+                function(response) {
+                    console.log('hecho!');
+                    defer.resolve(response);
+                },
+                function(response) {
+                    /*$scope.data = response.data || 'Request failed';
+                    $scope.status = response.status;*/
+                    console.log('Error');
+                    defer.reject('Error code 2');
+                }
+            );
+
+            return promise;
+        };
+
+        $scope.getHttpFunction = function() {
+
+            var url = 'http://localhost/curso-symfony/curso/web/app_dev.php/cursos/course/7';
+            var defer = $q.defer();
+            var promise = defer.promise;
+
+            $http(
+                {
+                    method: 'GET',
+                    url: url
+                }
+            ).then(
+                function(response) {
+                    console.log(response.data);
+                    defer.resolve(response);
+                },
+                function(response) {
+                    /*$scope.data = response.data || 'Request failed';
+                    $scope.status = response.status;*/
+                    console.log('Error');
+                    defer.reject('Error code 2');
+                }
+            );
+
+            return promise;
+        };
+
+		$scope.httpCall = function() {
 			console.log('previous', $scope.objectTest.message);
 			$scope.httpFunction().then(
 				function(response) {
 					// success
-					console.log('response', response);
-					console.log('inside', $scope.objectTest.message);
-					$scope.objectTest.message = 'Done!';
-					console.log('inside but after', $scope.objectTest.message);
+					$scope.objectTest.message = 'Hecho!';
+					console.log(response);
 				},
-				function() {
-					// error
+				function(errorResponse) {
+					// reject
 					$scope.objectTest.message = 'Error!';
 				}
 			)
 		}
 
 	};
+
+    /*** SERVICES ***/
+
+    app.factory('factoryName', function(){
+        return function(param) {
+            alert('hola, '+param);
+        }
+    });
+
+    app.service('serviceName', function(){
+        this.alertFunction = function(param) {
+            alert(param);
+        };
+        this.testParam = 12;
+    });
 
 	/* Pueden estar definidas dentro y fuera del controlador, no importa. Se cargan en tiempo de compilacion */
 
@@ -203,40 +312,32 @@
 	// or scope.$on('$destroy', ...) to run a clean-up function when the directive is removed.
 
 
-	/*** SERVICES ***/
-
-	app.factory('factoryName', function(){
-		return function(param) {
-			alert('hola, '+param);
-		}
-	});
-
-	app.service('serviceName', function(){
-		this.alertFunction = function(param) {
-			alert(param);
-		};
-		this.testParam = 12;
-	});
-
     // COMPONENT
-    function myComponentController($scope, $element, $attrs, serviceName) {
-        $scope.data = [
-        	{
-            	name: 'Nacho',
-            	value: serviceName.testParam
-        	}
-		];
-        $scope.info = {};
-        $scope.info.name = 'Test';
+    function myComponentController() {
+
     }
 
     app.component('myComponent', {
-        controller: ['$scope', '$element', '$attrs', 'serviceName', myComponentController],
+        controller: [myComponentController],
         templateUrl: 'myComponentTemplate.html'
     });
 
-    sessionStorage.setItem('testSessionStorage', 'hola');
-    localStorage.setItem('testLocalStorage', 'hola local storage');
+    app.service('myServiceToComponent', function(){
+        this.property = 'valueService';
+    });
+
+    // COMPONENT 2
+    function myComponentController2($scope, service) {
+        $scope.data = {};
+        $scope.data.property = 'value';
+        $scope.data.myService = service;
+    }
+
+    app.component('myComponent2', {
+        controller: ['$scope','myServiceToComponent',myComponentController2],
+        templateUrl: 'myComponentTemplate2.html'
+    });
+
 
 
 })(window.angular);

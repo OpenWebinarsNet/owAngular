@@ -1,5 +1,5 @@
 
-<h3>Detalles de mi perfil</h3>
+<h3>Formulario</h3>
 
 <form name="form" class="css-form" novalidate>
 
@@ -9,20 +9,16 @@
 
     <div class="form-group row">
         <div class="col-md-12">
-            <input placeholder="Nombre" type="text" name="name"
-                   class="form-control" ng-model="path" required>
+            <input placeholder="Nombre" type="text" ng-model="userData.name" name="name"
+                   class="form-control" required>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-md-12">
             <input placeholder="email" type="email"
-                   name="email" class="form-control" ng-model="user.email" required>
+                   name="email" class="form-control" ng-model="userData.email" required>
         </div>
     </div>
 
 </form>
-<button ng-click="test()">Test!</button>
-<input placeholder="test" type="text"
-       name="path" class="form-control" ng-model="userData.path" required>
-{{userData.path}}
